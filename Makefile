@@ -3,6 +3,8 @@ default:
 	./hack/build.sh
 image:
 	./hack/build-image.sh
+push:
+	./hack/push-image.sh
 clean:
 	./hack/cleanup.sh
 fmt:

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t openshift.io/linuxptp-daemon -f ./Dockerfile .
+podman build -t quay.io/jacding/linuxptp-daemon -f ./Dockerfile .
