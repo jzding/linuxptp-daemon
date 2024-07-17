@@ -372,7 +372,7 @@ func extractRegularMetrics(configName, processName, output string, ifaces config
 	}
 
 	output = strings.Replace(output, "path", "", 1)
-	replacer := strings.NewReplacer("[", " ", "]", " ", ":", " ", " phc ", " ", " sys ", "")
+	replacer := strings.NewReplacer("[", " ", "]", " ", ":", " ", " phc ", " ", " sys ", " ")
 	output = replacer.Replace(output)
 
 	index := strings.Index(output, configName)
@@ -382,6 +382,7 @@ func extractRegularMetrics(configName, processName, output string, ifaces config
 
 	output = output[index:]
 	fields := strings.Fields(output)
+	glog.Infof("DZK %s", output)
 
 	//       0         1      2          3     4   5    6          7     8
 	// ptp4l.0.config master offset   -2162130 s2 freq +22451884  delay 374976
@@ -391,6 +392,10 @@ func extractRegularMetrics(configName, processName, output string, ifaces config
 	// ts2phc.0.cfg  /dev/ptp4  master    offset          0 s2 freq      -0
 	// ts2phc.0.cfg  /dev/ptp4 offset          0 s2 freq      -0
 	// (ts2phc.0.cfg  master  offset      0    s2 freq     -0)
+	// for phc2sys
+	// ptp4l.0.config  CLOCK_REALTIME offset       -10 s2 freq   +8956 delay    508
+	// ptp4l.0.config  ens2f0 offset         3 s2 freq  -14502 delay    534
+
 	if len(fields) < 7 {
 		return
 	}
@@ -426,6 +431,7 @@ func extractRegularMetrics(configName, processName, output string, ifaces config
 
 	iface = fields[1]
 	if iface != clockRealTime && iface != master {
+		glog.Infof("DZK ignore iface=%s", iface)
 		return // ignore master port offsets
 	}
 

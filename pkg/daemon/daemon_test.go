@@ -3,11 +3,12 @@ package daemon_test
 import (
 	"flag"
 	"fmt"
-	ptpv1 "github.com/openshift/ptp-operator/api/v1"
-	"k8s.io/utils/pointer"
 	"os"
 	"strings"
 	"testing"
+
+	ptpv1 "github.com/openshift/ptp-operator/api/v1"
+	"k8s.io/utils/pointer"
 
 	"github.com/openshift/linuxptp-daemon/pkg/config"
 	"github.com/openshift/linuxptp-daemon/pkg/daemon"
@@ -82,6 +83,23 @@ func (tc *TestCase) cleanupMetrics() {
 }
 
 var testCases = []TestCase{
+	{
+		log:                         "phc2sys[6387.168]: [ptp4l.0.config:6] ens2f0 sys offset         3 s2 freq  -14502 delay    534",
+		MessageTag:                  "[ptp4l.0.config]",
+		Name:                        "phc2sys",
+		from:                        "phc",
+		process:                     "phc2sys",
+		iface:                       "ens2f0",
+		expectedOffset:              3,
+		expectedMaxOffset:           3,
+		expectedFrequencyAdjustment: -14502,
+		expectedDelay:               534,
+		expectedClockState:          s2,
+		expectedNmeaStatus:          SKIP,
+		expectedPpsStatus:           SKIP,
+		expectedClockClassMetrics:   SKIP,
+		expectedInterfaceRole:       SKIP,
+	},
 	{
 		log:                         "phc2sys[1823126.732]: [ptp4l.0.config] CLOCK_REALTIME phc offset       -10 s2 freq   +8956 delay    508",
 		MessageTag:                  "[ptp4l.0.config]",
