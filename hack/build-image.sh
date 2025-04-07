@@ -1,3 +1,10 @@
 #!/bin/bash
 
-docker build -t openshift.io/linuxptp-daemon -f ./Dockerfile .
+CONTAINER_TOOL="${CONTAINER_TOOL:-docker}"
+IMAGE_NAME="${IMAGE_NAME:-linuxptp-daemon-image}"
+IMAGE_TAG_BASE="${IMAGE_TAG_BASE:-ghcr.io/k8snetworkplumbingwg/${IMAGE_NAME}}"
+VERSION="${VERSION:-latest}"
+IMG="${IMAGE_TAG_BASE}:${VERSION}"
+
+IMG=quay.io/jacding/linuxptp-daemon:4.18
+$CONTAINER_TOOL build --platform=linux/amd64 -t "${IMG}"  -f Dockerfile .
