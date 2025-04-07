@@ -3,6 +3,7 @@ IMAGE_TAG_BASE ?= ghcr.io/k8snetworkplumbingwg/$(IMAGE_NAME)
 VERSION ?=latest
 IMG ?= $(IMAGE_TAG_BASE):$(VERSION)
 CONTAINER_TOOL ?=docker
+IMG=quay.io/jacding/linuxptp-daemon:4.19
 
 .PHONY: test
 default:
