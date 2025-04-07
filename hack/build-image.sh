@@ -6,4 +6,5 @@ IMAGE_TAG_BASE="${IMAGE_TAG_BASE:-ghcr.io/k8snetworkplumbingwg/${IMAGE_NAME}}"
 VERSION="${VERSION:-latest}"
 IMG="${IMAGE_TAG_BASE}:${VERSION}"
 
-$CONTAINER_TOOL build -t "${IMG}"  -f ./Dockerfile .
+IMG=quay.io/jacding/linuxptp-daemon:4.19
+$CONTAINER_TOOL build --platform=linux/amd64 -t "${IMG}"  -f ./addons/redhat/Dockerfile.ocp .
