@@ -3,6 +3,8 @@ default:
 	./hack/build.sh
 image:
 	./hack/build-image.sh
+push:
+	docker push quay.io/jacding/linuxptp-daemon:4.18
 clean:
 	./hack/cleanup.sh
 fmt:
